@@ -12,7 +12,7 @@
     * Description : An app that illustrates heaps.
     * Input: An array of numbers for a heap
     * Output: the heap
-    * BigO: [TODO]
+    * BigO: O(n)
     * Academic Honesty: I attest that this is my original work.
     * I have not used unauthorized source code, either modified or
     * unmodified. I have not given other fellow student(s) access
@@ -52,24 +52,6 @@ class LinkedList:
             current.next = new_node
 
 
-class PriorityQueue:
-    def __init__(self):
-        self.tasks = []
-
-    def add_task(self, task):
-        self.tasks.append(task)
-
-
-def quicksort(arr):
-    if len(arr) <= 1:
-        return arr
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x.priority < pivot.priority]
-    middle = [x for x in arr if x.priority == pivot.priority]
-    right = [x for x in arr if x.priority > pivot.priority]
-    return quicksort(left) + middle + quicksort(right)
-
-
 class TaskManagerApp:
     def __init__(self, root):
         self.root = root
@@ -102,6 +84,8 @@ class TaskManagerApp:
     def validate_input(self, description, priority, due_date):
         if not description or not priority or not due_date:
             return False
+        if not priority.isdigit():
+            return False
         return True
 
     def update_task_listbox(self):
@@ -124,8 +108,11 @@ class TaskManagerApp:
             self.description_entry.delete(0, tk.END)
             self.priority_entry.delete(0, tk.END)
             self.due_date_entry.delete(0, tk.END)
+        else:
+            messagebox.showerror("Error", "Invalid input! Please check your input.")
 
 
-root = tk.Tk()
-app = TaskManagerApp(root)
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = TaskManagerApp(root)
+    root.mainloop()
